@@ -285,7 +285,7 @@ public class DataxJsonHelper implements DataxJsonInterface {
         }
         dataxHbasePojo.setColumns(columns);
         dataxHbasePojo.setReaderHbaseConfig(readerDatasource.getZkAdress());
-        String readerTable=!CollectionUtils.isEmpty(readerTables)?readerTables.get(0):Constants.STRING_BLANK;
+        String readerTable = !CollectionUtils.isEmpty(readerTables) ? readerTables.get(0) : Constants.STRING_BLANK;
         dataxHbasePojo.setReaderTable(readerTable);
         dataxHbasePojo.setReaderMode(hbaseReaderDto.getReaderMode());
         dataxHbasePojo.setReaderRange(hbaseReaderDto.getReaderRange());
@@ -329,12 +329,12 @@ public class DataxJsonHelper implements DataxJsonInterface {
             columns.add(column);
         });
         dataxHivePojo.setColumns(columns);
-        dataxHivePojo.setWriterDefaultFS(hiveWriterDto.getWriterDefaultFS());
-        dataxHivePojo.setWriteFieldDelimiter(hiveWriterDto.getWriteFieldDelimiter());
-        dataxHivePojo.setWriterFileType(hiveWriterDto.getWriterFileType());
-        dataxHivePojo.setWriterPath(hiveWriterDto.getWriterPath());
-        dataxHivePojo.setWriteMode(hiveWriterDto.getWriteMode());
-        dataxHivePojo.setWriterFileName(hiveWriterDto.getWriterFileName());
+        dataxHivePojo.setWriterDefaultFS("".equals(hiveWriterDto.getWriterDefaultFS()) ? HIVE_DEFAULT_FS : hiveWriterDto.getWriterDefaultFS());
+        dataxHivePojo.setWriteFieldDelimiter("".equals(hiveWriterDto.getWriteFieldDelimiter()) ? HIVE_FIELD_DELIMITER : hiveWriterDto.getWriteFieldDelimiter());
+        dataxHivePojo.setWriterFileType("".equals(hiveWriterDto.getWriterFileType()) ? HIVE_FILE_TYPE : hiveWriterDto.getWriterFileType());
+        dataxHivePojo.setWriterPath("".equals(hiveWriterDto.getWriterPath()) ? HIVE_WRITER_PATH_START_WITH + writerTables.get(0) + HIVE_WRITER_PATH_END_WITH : hiveWriterDto.getWriterPath());
+        dataxHivePojo.setWriteMode("".equals(hiveWriterDto.getWriteMode()) ? HIVE_WRITE_MODE : hiveWriterDto.getWriteMode());
+        dataxHivePojo.setWriterFileName("".equals(hiveWriterDto.getWriterFileName()) ? HIVE_FILE_NAME : hiveWriterDto.getWriterFileName());
         return writerPlugin.buildHive(dataxHivePojo);
     }
 
@@ -352,7 +352,7 @@ public class DataxJsonHelper implements DataxJsonInterface {
         }
         dataxHbasePojo.setColumns(columns);
         dataxHbasePojo.setWriterHbaseConfig(writerDatasource.getZkAdress());
-        String writerTable=!CollectionUtils.isEmpty(writerTables)?writerTables.get(0):Constants.STRING_BLANK;
+        String writerTable = !CollectionUtils.isEmpty(writerTables) ? writerTables.get(0) : Constants.STRING_BLANK;
         dataxHbasePojo.setWriterTable(writerTable);
         dataxHbasePojo.setWriterVersionColumn(hbaseWriterDto.getWriterVersionColumn());
         dataxHbasePojo.setWriterRowkeyColumn(hbaseWriterDto.getWriterRowkeyColumn());

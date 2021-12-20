@@ -57,6 +57,16 @@ public interface JdbcConstants {
 
     String HIVE                       = "hive";
     String HIVE_DRIVER                = "org.apache.hive.jdbc.HiveDriver";
+    String HIVE_DEFAULT_DATABASE      = "jdbc:hive2://10.49.2.135:7001/ods";
+    String HIVE_USER                  = "hadoop";
+    String HIVE_PASSWORD              = "";
+    String HIVE_DEFAULT_FS            = "hdfs://10.49.0.40:4007";
+    String HIVE_FIELD_DELIMITER       = "\t";
+    String HIVE_WRITER_PATH_START_WITH = "/usr/hive/warehouse/ods.db/";
+    String HIVE_WRITER_PATH_END_WITH  = "/dt=datax";
+    String HIVE_FILE_TYPE             = "parquet";
+    String HIVE_WRITE_MODE            = "append";
+    String HIVE_FILE_NAME             = "datax_";
 
     String H2                         = "h2";
     String H2_DRIVER                  = "org.h2.Driver";

@@ -2,6 +2,7 @@ package com.wugui.datax.admin.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.wugui.datax.admin.service.DatasourceQueryService;
+import com.wugui.datax.admin.service.JobCreateTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class MetadataController extends BaseController {
     @Autowired
     private DatasourceQueryService datasourceQueryService;
 
+    @Autowired
+    private JobCreateTableService jobCreateTableService;
+
     /**
      * 根据数据源id获取mongo库名
      *
@@ -48,8 +52,8 @@ public class MetadataController extends BaseController {
      */
     @GetMapping("/collectionNames")
     @ApiOperation("根据数据源id,dbname获取CollectionNames")
-    public R<List<String>> getCollectionNames(Long datasourceId,String dbName) throws IOException {
-        return success(datasourceQueryService.getCollectionNames(datasourceId,dbName));
+    public R<List<String>> getCollectionNames(Long datasourceId, String dbName) throws IOException {
+        return success(datasourceQueryService.getCollectionNames(datasourceId, dbName));
     }
 
     /**
@@ -72,8 +76,8 @@ public class MetadataController extends BaseController {
      */
     @GetMapping("/getTables")
     @ApiOperation("根据数据源id获取可用表名")
-    public R<List<String>> getTableNames(Long datasourceId,String tableSchema) throws IOException {
-        return success(datasourceQueryService.getTables(datasourceId,tableSchema));
+    public R<List<String>> getTableNames(Long datasourceId, String tableSchema) throws IOException {
+        return success(datasourceQueryService.getTables(datasourceId, tableSchema));
     }
 
     /**
@@ -100,5 +104,20 @@ public class MetadataController extends BaseController {
     @ApiOperation("根据数据源id和sql语句获取所有字段")
     public R<List<String>> getColumnsByQuerySql(Long datasourceId, String querySql) throws SQLException {
         return success(datasourceQueryService.getColumnsByQuerySql(datasourceId, querySql));
+    }
+
+    /**
+     * 根据mysql表和env_key创建对应hive表
+     *
+     * @param datasourceId 数据源id
+     * @param tableName    表名
+     * @param envKey       env_key
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping("/createHiveTable")
+    @ApiOperation("根据mysql表和env_key创建对应hive表")
+    public R<Boolean> createHiveTable(Long datasourceId, String tableName, String envKey) throws SQLException {
+        return success(jobCreateTableService.createHiveTable(datasourceId, tableName, envKey));
     }
 }

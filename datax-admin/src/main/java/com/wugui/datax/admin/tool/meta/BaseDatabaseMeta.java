@@ -46,6 +46,11 @@ public abstract class BaseDatabaseMeta implements DatabaseInterface {
     }
 
     @Override
+    public String getSQLQueryFieldsComment(String tableName, String field) {
+        return String.format("SELECT COLUMN_COMMENT FROM information_schema.COLUMNS where TABLE_NAME = '%s' and COLUMN_NAME = '%s'", tableName, field);
+    }
+
+    @Override
     public String getSQLQueryTableSchema(String... args) {
         return null;
     }

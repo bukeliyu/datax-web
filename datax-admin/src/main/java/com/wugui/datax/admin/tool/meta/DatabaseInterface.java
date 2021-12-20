@@ -11,6 +11,14 @@ public interface DatabaseInterface {
     String getSQLQueryFields(String tableName);
 
     /**
+     * 获取字段和字段注释
+     * @param tableName
+     * @param field
+     * @return
+     */
+    String getSQLQueryFieldsComment(String tableName,String field);
+
+    /**
      * 获取主键字段
      *
      * @return

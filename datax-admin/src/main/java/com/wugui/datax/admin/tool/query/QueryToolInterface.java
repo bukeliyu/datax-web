@@ -84,4 +84,11 @@ public interface QueryToolInterface {
      */
     long getMaxIdVal(String tableName,String primaryKey);
 
+    /**
+     * 获取字段comment
+     * @param tableName
+     * @param field
+     * @return
+     */
+    String getSQLQueryFieldsComment(String tableName,String field) throws SQLException;
 }

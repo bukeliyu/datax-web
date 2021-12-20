@@ -443,6 +443,28 @@ public abstract class BaseQueryTool implements QueryToolInterface {
     }
 
     @Override
+    public String getSQLQueryFieldsComment(String tableName, String field) {
+
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = connection.createStatement();
+            String fieldCommentSql = sqlBuilder.getSQLQueryFieldsComment(tableName, field);
+            rs = stmt.executeQuery(fieldCommentSql);
+            rs.next();
+            String comment = rs.getString(1);
+            return comment;
+        } catch (SQLException e) {
+            logger.error("[getFieldsComment Exception] --> "
+                    + "the exception message is:" + e.getMessage());
+        } finally {
+            JdbcUtils.close(rs);
+            JdbcUtils.close(stmt);
+        }
+        return "";
+    }
+
+    @Override
     public long getMaxIdVal(String tableName, String primaryKey) {
         Statement stmt = null;
         ResultSet rs = null;
