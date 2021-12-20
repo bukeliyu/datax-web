@@ -51,9 +51,9 @@ public class DatasourceQueryServiceImpl implements DatasourceQueryService {
             return new MongoDBQueryTool(datasource).getCollectionNames(datasource.getDatabaseName());
         } else {
             BaseQueryTool qTool = QueryToolFactory.getByDbType(datasource);
-            if(StringUtils.isBlank(tableSchema)){
+            if (StringUtils.isBlank(tableSchema)) {
                 return qTool.getTableNames();
-            }else{
+            } else {
                 return qTool.getTableNames(tableSchema);
             }
         }
@@ -84,7 +84,7 @@ public class DatasourceQueryServiceImpl implements DatasourceQueryService {
 
 
     @Override
-    public List<String> getColumns(Long id, String tableName) throws IOException {
+    public List<String> getColumns(Long id, String tableName, String envKey) throws IOException {
         //获取数据源对象
         JobDatasource datasource = jobDatasourceService.getById(id);
         //queryTool组装
@@ -95,6 +95,11 @@ public class DatasourceQueryServiceImpl implements DatasourceQueryService {
             return new HBaseQueryTool(datasource).getColumns(tableName);
         } else if (JdbcConstants.MONGODB.equals(datasource.getDatasource())) {
             return new MongoDBQueryTool(datasource).getColumns(tableName);
+        } else if (JdbcConstants.MYSQL.equals(datasource.getDatasource())) {
+            BaseQueryTool queryTool = QueryToolFactory.getByDbType(datasource);
+            return "".equals(envKey)
+                    ? queryTool.getColumnNames(tableName, datasource.getDatasource())
+                    : queryTool.getColumnsNamesWithEnvKey(tableName, datasource.getDatasource(), envKey) ;
         } else {
             BaseQueryTool queryTool = QueryToolFactory.getByDbType(datasource);
             return queryTool.getColumnNames(tableName, datasource.getDatasource());

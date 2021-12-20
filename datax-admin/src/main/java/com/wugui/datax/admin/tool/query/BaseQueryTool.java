@@ -330,6 +330,38 @@ public abstract class BaseQueryTool implements QueryToolInterface {
     }
 
     @Override
+    public List<String> getColumnsNamesWithEnvKey(String tableName, String datasource, String envKey) {
+        List<String> res = Lists.newArrayList();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            //获取查询指定表所有字段的sql语句
+            String querySql = sqlBuilder.getSQLQueryFieldsWithEnvKey(tableName, envKey);
+            logger.info("querySql: {}", querySql);
+
+            //获取所有字段
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery(querySql);
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                String columnName = "env_key__".equals(metaData.getColumnName(i))
+                        ? String.format("'%s' as env_key__", envKey)
+                        : metaData.getColumnName(i);
+                res.add(columnName);
+            }
+        } catch (SQLException e) {
+            logger.error("[getColumnNames Exception] --> "
+                    + "the exception message is:" + e.getMessage());
+        } finally {
+            JdbcUtils.close(rs);
+            JdbcUtils.close(stmt);
+        }
+        return res;
+    }
+
+    @Override
     public List<String> getTableNames(String tableSchema) {
         List<String> tables = new ArrayList<String>();
         Statement stmt = null;

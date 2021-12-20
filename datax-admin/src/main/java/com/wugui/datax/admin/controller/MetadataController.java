@@ -89,8 +89,8 @@ public class MetadataController extends BaseController {
      */
     @GetMapping("/getColumns")
     @ApiOperation("根据数据源id和表名获取所有字段")
-    public R<List<String>> getColumns(Long datasourceId, String tableName) throws IOException {
-        return success(datasourceQueryService.getColumns(datasourceId, tableName));
+    public R<List<String>> getColumns(Long datasourceId, String tableName, String envKey) throws IOException {
+        return success(datasourceQueryService.getColumns(datasourceId, tableName, envKey));
     }
 
     /**

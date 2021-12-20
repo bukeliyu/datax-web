@@ -16,6 +16,11 @@ public abstract class BaseDatabaseMeta implements DatabaseInterface {
     }
 
     @Override
+    public String getSQLQueryFieldsWithEnvKey(String tableName, String envKey) {
+        return "SELECT '" + envKey + "' as env_key__, t.* FROM " + tableName + " t where 1=0";
+    }
+
+    @Override
     public String getSQLQueryTablesNameComments() {
         return "select table_name,table_comment from information_schema.tables where table_schema=?";
     }
@@ -42,7 +47,7 @@ public abstract class BaseDatabaseMeta implements DatabaseInterface {
 
     @Override
     public String getMaxId(String tableName, String primaryKey) {
-        return String.format("select max(%s) from %s",primaryKey,tableName);
+        return String.format("select max(%s) from %s", primaryKey, tableName);
     }
 
     @Override

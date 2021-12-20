@@ -52,8 +52,15 @@ public interface QueryToolInterface {
      * @param tableName
      * @return2
      */
-    List<String> getColumnNames(String tableName,String datasource);
+    List<String> getColumnNames(String tableName, String datasource);
 
+    /**
+     * 增加env_key字段
+     *
+     * @param tableName,envKey
+     * @return2
+     */
+    List<String> getColumnsNamesWithEnvKey(String tableName, String datasource, String envKey);
 
     /**
      * 获取所有可用表名
@@ -71,6 +78,7 @@ public interface QueryToolInterface {
 
     /**
      * 通过查询sql获取columns
+     *
      * @param querySql
      * @return
      */
@@ -78,17 +86,19 @@ public interface QueryToolInterface {
 
     /**
      * 获取当前表maxId
+     *
      * @param tableName
      * @param primaryKey
      * @return
      */
-    long getMaxIdVal(String tableName,String primaryKey);
+    long getMaxIdVal(String tableName, String primaryKey);
 
     /**
      * 获取字段comment
+     *
      * @param tableName
      * @param field
      * @return
      */
-    String getSQLQueryFieldsComment(String tableName,String field) throws SQLException;
+    String getSQLQueryFieldsComment(String tableName, String field) throws SQLException;
 }

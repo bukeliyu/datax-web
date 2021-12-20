@@ -42,7 +42,7 @@ public interface DatasourceQueryService {
      * @param id
      * @return
      */
-    List<String> getColumns(Long id, String tableName) throws IOException;
+    List<String> getColumns(Long id, String tableName, String envKey) throws IOException;
 
     /**
      * 根据 sql 语句获取字段

@@ -11,6 +11,14 @@ public interface DatabaseInterface {
     String getSQLQueryFields(String tableName);
 
     /**
+     * add filed env_key
+     *
+     * @param tableName The name of the table to determine the layout for
+     * @return The SQL to launch.
+     */
+    String getSQLQueryFieldsWithEnvKey(String tableName,String envKey);
+
+    /**
      * 获取字段和字段注释
      * @param tableName
      * @param field
